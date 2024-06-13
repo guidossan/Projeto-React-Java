@@ -19,12 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ImageController {
 
 
+    @PostMapping()
+    public ResponseEntity<String> save(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("name")String name,
+            @RequestParam("tags") List<String> tags
+        ){
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping
-    public ResponseEntity save(@RequestParam("file") MultipartFile file, @RequestParam("name")String name, @RequestParam("tags") List<String> tags){
-
-        log.info("Imagem recebida: name {}, size {}", file.getName(), file.getSize());
+        log.info("Imagem recebida: name {}, size {}", file.getOriginalFilename(), file.getSize());
         log.info("Nome definido para a imagem:  {}", name);
         log.info("Tags: {}", tags);
         return ResponseEntity.ok().build();
