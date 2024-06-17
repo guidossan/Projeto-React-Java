@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tb_image")
 @EntityListeners(AuditingEntityListener.class)
+//lombok para não ter que criar construtor e get/set
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
