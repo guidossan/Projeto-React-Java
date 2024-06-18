@@ -14,20 +14,22 @@ import com.guilherme.demo.repository.ImageReporitory;
 @SpringBootApplication
 @EnableJpaAuditing
 public class DemoApplication {
-
-	@Bean
-	public CommandLineRunner commandLineRunner(@Autowired ImageReporitory repository){
+	/*
+	 * 
+	 @Bean
+	 public CommandLineRunner commandLineRunner(@Autowired ImageReporitory repository){
 		return args -> {
 			Image image = Image
-						.builder()
-						.extencion(ImageExtencion.PNG)
-						.name("myImage")
-						.tags("teste")
-						.size(1000L)
-						.build();
+			.builder()
+			.extencion(ImageExtencion.PNG)
+			.name("myImage")
+			.tags("teste")
+			.size(1000L)
+			.build();
 			repository.save(image);
 		};
 	}
+	*/
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	
