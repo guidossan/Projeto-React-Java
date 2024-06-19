@@ -73,7 +73,7 @@ public class ImageController {
                 @RequestParam(value = "extencion", required = false, defaultValue = "") String extencion,
                 @RequestParam(value = "query", required = false)String query){
 
-        var result = service.search(ImageExtencion.valueOf(extencion), query);
+        var result = service.search(ImageExtencion.ofName(extencion), query);
 
         var images = result.stream().map(image -> {
             var url = buildImageUri(image);
