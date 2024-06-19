@@ -2,7 +2,7 @@ package com.guilherme.demo.domain.enums;
 import java.util.Arrays;
 import org.springframework.http.MediaType;
 
-import com.guilherme.demo.domain.entity.Image;
+
 
 import lombok.Getter;
 
