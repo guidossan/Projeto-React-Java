@@ -3,6 +3,7 @@ package com.guilherme.demo.application;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.guilherme.demo.domain.entity.Image;
+import com.guilherme.demo.domain.enums.ImageExtencion;
 import com.guilherme.demo.domain.service.ImageService;
 
 import lombok.RequiredArgsConstructor;
@@ -63,8 +65,27 @@ public class ImageController {
         headers.setContentDispositionFormData("inline; filename=\"" + image.getFileName() + "\"", image.getFileName());
         return new ResponseEntity<>(image.getFile(), headers, HttpStatus.OK);
     }
+
+    //http://localhost:8080/images?extencio=PNG&query=Nature
+
+    @GetMapping
+    public ResponseEntity<List<ImageDTO>> search(
+                @RequestParam(value = "extencion", required = false) String extencion,
+                @RequestParam(value = "query", required = true)String query){
+
+        var result = service.search(ImageExtencion.valueOf(extencion), query);
+
+        var images = result.stream().map(image -> {
+            var url = buildImageUri(image);
+            return mapper.imageToDto(image, url.toString());
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(images);
+    }
+
     private URI buildImageUri(Image image){
         String imagePath = "/" + image.getId();
         return ServletUriComponentsBuilder.fromCurrentRequest().path(imagePath).build().toUri();
     }
+
 }
