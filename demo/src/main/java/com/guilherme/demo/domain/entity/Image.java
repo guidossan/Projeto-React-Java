@@ -50,6 +50,9 @@ public class Image {
     //salvar arquivos
     @Lob 
     private byte[] file;
-
+    public String getFileName(){
+        //landau213412.PNG
+        return getName().concat(".").concat(getExtencion().name());
+    }
     
 }

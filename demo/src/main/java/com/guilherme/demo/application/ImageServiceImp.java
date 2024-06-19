@@ -1,5 +1,7 @@
 package com.guilherme.demo.application;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,11 @@ public class ImageServiceImp implements ImageService{
     @Transactional
     public Image save(Image image) {
        return repository.save(image);
+    }
+
+    @Override
+    public Optional<Image> findById(String id) {
+        return repository.findById(id);
     }
     
 }

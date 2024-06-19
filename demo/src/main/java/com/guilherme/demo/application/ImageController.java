@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.guilherme.demo.domain.entity.Image;
-import com.guilherme.demo.domain.enums.ImageExtencion;
 import com.guilherme.demo.domain.service.ImageService;
 
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,20 @@ public class ImageController {
         Image savedImage = service.save(image);
         URI imageUri = buildImageUri(savedImage);
         return ResponseEntity.created(imageUri).build();
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String id){
+        var possibleImage = service.findById(id);
+        if (possibleImage.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        var image = possibleImage.get();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(image.getExtencion().getMediaType());
+        headers.setContentLength(image.getSize());
+        //inline; filename ="image.PNG"
+        headers.setContentDispositionFormData("inline; filename=\"" + image.getFileName() + "\"", image.getFileName());
+        return new ResponseEntity<>(image.getFile(), headers, HttpStatus.OK);
     }
     private URI buildImageUri(Image image){
         String imagePath = "/" + image.getId();
