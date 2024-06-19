@@ -1,9 +1,13 @@
-import Image from 'next/image'
+import {PrimeiroComponent, ArrowFunction} from '../components/PrimeiroComponet'
 
 export default function Home() {
   return (
-    <main>
-      Hello Word!
-    </main>
+    <>
+
+    <PrimeiroComponent />
+    <ArrowFunction />
+    
+
+    </>
   )
 }
