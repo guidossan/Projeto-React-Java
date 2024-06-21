@@ -1,20 +1,39 @@
+'use client'
+
 import { InputText, Template, Button } from "@/components"
 import Link from 'next/link';
+import { useFormik } from 'formik';
+
+interface FormProps {
+    name: string;
+    tags: string;
+    file: any;
+}
+
+
+const formsScheme: FormProps ={ name: '', tags: '', file: ''}
+
 
 
 export default function FormularioPage(){
+    const formik = useFormik<FormProps>({
+        initialValues: formsScheme,
+        onSubmit: (dados: FormProps) => {
+            console.log(dados)
+        }
+    })
     return (
         <Template>
             <section className="flex flex-col items-center justify-center my-5">
                 <h5 className="mt-3 mb-10 text-3x1 font-extrabold tracking-tight text-gray-900">Nova Image</h5>
-                <form>  
+                <form onSubmit={formik.handleSubmit}>  
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Nome: *</label>
-                        <InputText placeHolder="Nome da imagem" />
+                        <InputText id="name" onChange={formik.handleChange} placeHolder="Nome da imagem" />
                     </div>
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Tags: *</label>
-                        <InputText placeHolder="Digite o nome das tegs separado por vírgula" />
+                        <InputText id="tags" onChange={formik.handleChange} placeHolder="Digite o nome das tegs separado por vírgula" />
                     </div>
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Image: *</label>
@@ -33,9 +52,9 @@ export default function FormularioPage(){
                         </div>
                     </div>
                     <div className="mt-5 flex items-center justify-end gap-x-4">   
-                        <Button type='submit' style="bg-blue-500 hover:bg-blue-300" label="Save"/>
+                        <Button type="submit" style="bg-blue-500 hover:bg-blue-300" label="Save"/>
                         <Link href='/galeria'>
-                            <Button type='button' style="bg-red-500 hover:bg-red-300" label="Cancelar"/>
+                            <Button type="button" style="bg-red-500 hover:bg-red-300" label="Cancelar"/>
                         </Link>
                     </div>
                 </form>
