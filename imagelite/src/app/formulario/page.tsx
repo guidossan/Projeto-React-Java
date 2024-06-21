@@ -1,6 +1,6 @@
 'use client'
 
-import { InputText, Template, Button, RenderIf } from "@/components"
+import { InputText, Template, Button, RenderIf, useNotification } from "@/components"
 import { useImagesService } from '@/resources/image/image.service'
 import Link from 'next/link';
 import { useFormik } from 'formik';
@@ -20,6 +20,7 @@ const formsScheme: FormProps ={ name: '', tags: '', file: ''}
 export default function FormularioPage(){
   
     const useService = useImagesService();
+    const notification = useNotification();
     const [ImagePreview, setImagePreview] = useState<string>();
     const [Loading, setLoading] = useState<boolean>(false);
    
@@ -39,6 +40,7 @@ export default function FormularioPage(){
         formik.resetForm();
         setImagePreview('')
         setLoading(false);
+        notification.notify("Upload enviado com sucesso", 'success');
     }
 
 
