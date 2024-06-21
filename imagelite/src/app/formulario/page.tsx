@@ -63,11 +63,11 @@ export default function FormularioPage(){
                 <form onSubmit={formik.handleSubmit}>  
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Nome: *</label>
-                        <InputText id="name" onChange={formik.handleChange} placeHolder="Nome da imagem" />
+                        <InputText id="name" onChange={formik.handleChange} placeHolder="Nome da imagem" value={formik.values.name}/>
                     </div>
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Tags: *</label>
-                        <InputText id="tags" onChange={formik.handleChange} placeHolder="Digite o nome das tegs separado por vírgula" />
+                        <InputText id="tags" onChange={formik.handleChange} placeHolder="Digite o nome das tegs separado por vírgula" value={formik.values.tags} />
                     </div>
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Image: *</label>
