@@ -18,14 +18,17 @@ const formsScheme: FormProps ={ name: '', tags: '', file: ''}
 
 
 export default function FormularioPage(){
+  
     const useService = useImagesService();
     const [ImagePreview, setImagePreview] = useState<string>();
+    const [Loading, setLoading] = useState<boolean>(false);
    
     const formik = useFormik<FormProps>({
         initialValues: formsScheme,
         onSubmit: handleSubmit
     })
     async function handleSubmit(dados: FormProps){
+        setLoading(true);
         const formData = new FormData();
         formData.append("file", dados.file);
         formData.append("name", dados.name);
@@ -35,6 +38,7 @@ export default function FormularioPage(){
 
         formik.resetForm();
         setImagePreview('')
+        setLoading(false);
     }
 
 
@@ -53,7 +57,7 @@ export default function FormularioPage(){
         }
     }
     return (
-        <Template>
+        <Template loading={Loading}>
             <section className="flex flex-col items-center justify-center my-5">
                 <h5 className="mt-3 mb-10 text-3x1 font-extrabold tracking-tight text-gray-900">Nova Image</h5>
                 <form onSubmit={formik.handleSubmit}>  
