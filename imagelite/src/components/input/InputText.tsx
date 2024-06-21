@@ -14,7 +14,7 @@ export const InputText: React.FC<InputTextProps> = ({
         <input type="text" 
             onChange={onChange}
             placeholder={placeHolder}
-            className={`${style}border px-5 py-2 rounded-lg text-grey-900`} />
+            className={`${style} border flex-1 px-5 py-2 rounded-lg text-gray-900 border-0 pl-1 py-1.5 sm:leading-6`} />
         
     )
 }
