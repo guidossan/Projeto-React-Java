@@ -1,6 +1,6 @@
 'use client'
 
-import { InputText, Template, Button, RenderIf, useNotification } from "@/components"
+import { InputText, Template, Button, RenderIf, useNotification, FieldError } from "@/components"
 import { useImagesService } from '@/resources/image/image.service'
 import { useFormik } from 'formik';
 import { useState } from "react";
@@ -57,19 +57,19 @@ export default function FormularioPage(){
             <section className="flex flex-col items-center justify-center my-5">
                 <h5 className="mt-3 mb-10 text-3x1 font-extrabold tracking-tight text-gray-900">Nova Image</h5>
                 <form onSubmit={formik.handleSubmit}>  
-                    <div className="block grig grid-cols-1">
+                    <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Nome: *</label>
                         <InputText id="name" onChange={formik.handleChange} placeHolder="Nome da imagem" value={formik.values.name}/>
-                        <span className="text-red-500">{formik.errors.name}</span>
+                        <FieldError error={formik.errors.name}/>
                     </div>
-                    <div className="block grig grid-cols-1">
+                    <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Tags: *</label>
                         <InputText id="tags" onChange={formik.handleChange} placeHolder="Digite o nome das tegs separado por vírgula" value={formik.values.tags} />
-                        <span className="text-red-500">{formik.errors.tags}</span>
+                        <FieldError error={formik.errors.tags}/>
                     </div>
                     <div className="mt-5 grig grid-cols-1">
                         <label className="block text-sm font-medium leading-6 text-gray-500">Image: *</label>
-                        <span className="text-red-500">{formik.errors.file}</span>
+                        <FieldError error={formik.errors.file}/>
                         <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"> 
                             <div className="text-center">
                                 <RenderIf condition={!ImagePreview}>
