@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guilherme.demo.application.Jwt.JwtService;
 import com.guilherme.demo.domain.AccessToken;
 import com.guilherme.demo.domain.entity.User;
 import com.guilherme.demo.domain.exception.DuplicatedTupleException;
