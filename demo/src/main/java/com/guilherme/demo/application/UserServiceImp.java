@@ -56,6 +56,7 @@ public class UserServiceImp implements UserService{
          * verifica senha digitada com a do banco
          */
         boolean matches = passwordEncoder.matches(senha, user.getSenha());
+        
         if (matches){
             /*
              * gera token de senha

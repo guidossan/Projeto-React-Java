@@ -13,7 +13,7 @@ public class SecretKeyGenerator {
 
     public SecretKey getKey(){
         
-        if (key ==null ){
+        if (key == null ){
             key = Jwts.SIG.HS256.key().build();
         }
         return key;

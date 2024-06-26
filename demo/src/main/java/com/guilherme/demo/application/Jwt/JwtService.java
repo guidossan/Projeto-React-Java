@@ -29,7 +29,7 @@ public class JwtService {
 
         String token = Jwts
                 .builder()
-                .signWith(null)
+                .signWith(key)
                 .subject(user.getEmail())
                 .expiration(expirationDate)
                 .claims(claims)
