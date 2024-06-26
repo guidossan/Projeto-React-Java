@@ -1,5 +1,5 @@
 'use client'
-import{ Template, InputText, RenderIf } from '@/components'
+import{ Template, InputText, RenderIf, Button } from '@/components'
 import{ useState } from 'react'
 
 
@@ -11,17 +11,17 @@ export default function Login(){
         <Template loading={loading}>
              <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <RenderIf>
+               
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Cadastro
+                       {newUser ? 'Cadastro' : 'Login'}
                     </h2>
 
-                </RenderIf>
+               
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                 <form className="space-y-6" action="#" method="POST">
-                    <RenderIf>
+                    <RenderIf condition={newUser}>
 
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
@@ -50,11 +50,14 @@ export default function Login(){
                         <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                         Senha
                         </label>
-                        <div className="text-sm">
-                        <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                            Esqueceu senha?
-                        </a>
-                        </div>
+                        <RenderIf condition={!newUser}>
+
+                            <div className="text-sm">
+                                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                                    Esqueceu senha?
+                                </a>
+                            </div>
+                        </RenderIf>
                     </div>
                     <div className="mt-2">
                         <InputText 
@@ -65,12 +68,17 @@ export default function Login(){
                     </div>
 
                     <div>
-                    <button
-                        type="submit"
-                        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Sign in
-                    </button>
+                        <RenderIf condition={newUser}>
+                            <Button type='submit' style='bg-indigo-950 hover:bg-indigo-700' label='salvar'/>
+                            <Button type='button' style='bg-red-950 hover:bg-red-700 mx-3' label='cancelar' onClick={event => setNewUser(false)}/>
+
+                    
+                        </RenderIf>
+                        <RenderIf condition={!newUser}>
+                            <Button type='submit' style='bg-indigo-950 hover:bg-indigo-700' label='entrar'/>
+                            <Button type='button' style='bg-red-950 hover:bg-red-700 mx-3' label='cadastrar' onClick={event => setNewUser(true)}/>
+                            
+                        </RenderIf>
                     </div>
                 </form>
 
