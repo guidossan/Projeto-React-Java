@@ -28,6 +28,7 @@ public class JwtFilter extends OncePerRequestFilter{
 
     private final JwtService jwtService;
     private final UserService userService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException{
 
@@ -52,16 +53,16 @@ public class JwtFilter extends OncePerRequestFilter{
         
     private void setUserAsAutheticated(User user){
         UserDetails userDetails = org.springframework.security.core.userdetails.User
-        .withUsername(user.getEmail())
-        .password(user.getSenha())
-        .roles("USER")
-        .build();
-        
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, " ", userDetails.getAuthorities());
+                .withUsername(user.getEmail())
+                .password(user.getSenha())
+                .roles("USER")
+                .build();
+                
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }   
     private String getToken(HttpServletRequest request){
-        String auth = request.getHeader(ALREADY_FILTERED_SUFFIX);
+        String auth = request.getHeader("Authorization");
         if(auth != null){
             String[] authParts = auth.split(" ");
             if(authParts.length == 2){
