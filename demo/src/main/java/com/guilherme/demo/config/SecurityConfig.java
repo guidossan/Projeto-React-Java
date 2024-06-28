@@ -1,5 +1,7 @@
 package com.guilherme.demo.config;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,8 +29,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
-            .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configure(http))
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers(HttpMethod.POST, "/users/auth").permitAll()
                     .anyRequest().permitAll()
@@ -38,6 +40,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource configurationSource(){
         CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+	    config.setAllowedMethods(Arrays.asList("GET","POST"));
         UrlBasedCorsConfigurationSource cors = new UrlBasedCorsConfigurationSource();
         /*
          * aqui define especificamente quais url poderam acessar

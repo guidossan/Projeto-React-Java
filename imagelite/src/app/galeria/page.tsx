@@ -2,8 +2,9 @@
 
 import { ImageCard, Template, Button, InputText, useNotification } from '@/components'
 import { useState } from 'react'
-import { useImagesService }from '@/resources/image/image.service'
+import { useImagesService }from '@/resources'
 import {Image } from "@/resources/image/image.resources"
+
 import Link from 'next/link';
 
 
