@@ -67,7 +67,6 @@ public class JwtFilter extends OncePerRequestFilter{
             if(authParts.length == 2){
                 return authParts[1];
             }
-            return null;
         }
         return null;
     }
