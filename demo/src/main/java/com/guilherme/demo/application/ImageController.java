@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/images")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin("*")
+
 public class ImageController {
 
     private final ImageService service;
