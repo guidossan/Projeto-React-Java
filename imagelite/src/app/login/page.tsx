@@ -5,7 +5,7 @@ import { formsScheme, LoginForm, validationScheme } from './FormSchem'
 import { useAuth } from '@/resources'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
-import { AccessToken, Credentials } from '@/resources/user/Users'
+import { AccessToken, Credentials, User } from '@/resources/user/Users'
 
 export default function Login(){
 
@@ -33,8 +33,18 @@ export default function Login(){
                 const message = error?.message;
                 notification.notify(message, "error");
             }
+        }else {
+            const user: User = {name: values.name, email: values.email, senha: values.password}
+            try{
+                await auth.save(user);
+                notification.notify("Sucesso ao salvar usuário", "success");
+                formik.resetForm();
+                setNewUser(false)
+            }catch(error: any){
+                const message = error?.message;
+                notification.notify(message, "error");
+            }
         }
-        console.log(values)
     }
 
     return (
