@@ -29,13 +29,13 @@ public class JwtFilter extends OncePerRequestFilter{
     private final JwtService jwtService;
     private final UserService userService;
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-        
-        String token = getToken(request);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException{
 
+        String token = getToken(request);
+    
         if (token != null){
             try{
-
+    
                 String email = jwtService.getEmailFromToken(token);
                 User user = userService.getByEmail(email);
                 setUserAsAutheticated(user);
@@ -46,16 +46,17 @@ public class JwtFilter extends OncePerRequestFilter{
                 
             }
         }
-
+    
         filterChain.doFilter(request, response);
     }
+        
     private void setUserAsAutheticated(User user){
         UserDetails userDetails = org.springframework.security.core.userdetails.User
-                        .withUsername(user.getEmail())
-                        .password(user.getSenha())
-                        .roles("USER")
-                        .build();
-
+        .withUsername(user.getEmail())
+        .password(user.getSenha())
+        .roles("USER")
+        .build();
+        
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, " ", userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }   
@@ -68,6 +69,8 @@ public class JwtFilter extends OncePerRequestFilter{
             }
             return null;
         }
+        return null;
     }
-    
 }
+    
+
