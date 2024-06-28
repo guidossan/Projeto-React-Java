@@ -61,7 +61,7 @@ class AuthService{
         const token: UserSectionToken = JSON.parse(authString);
         return token;
     }
-    isSessionValide(){
+    isSessionValide() : boolean {
         const userSession: UserSectionToken|null = this.getUserSession();
         if(!userSession){
             return false;
