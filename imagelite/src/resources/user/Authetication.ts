@@ -1,4 +1,6 @@
 import{ AccessToken, Credentials, User, UserSectionToken } from './Users'
+import jwt from 'jwt-decode'
+
 
 class AuthService{
   
@@ -34,6 +36,23 @@ class AuthService{
             throw new Error("Usuário já existe")
         }
        
+    }
+    initSession(token: AccessToken){
+        if(token.accessToken){
+            const decodedToken: any = jwt(token.accessToken);
+            console.log(decodedToken);
+            const userSectionToken: UserSectionToken = {
+                accessToken: token.accessToken,
+                email: decodedToken.sub,
+                name: decodedToken.name,
+                expiration: decodedToken.exp
+            }
+            this.setUserSession(userSectionToken);
+
+        }
+    }
+    setUserSession(userSectionToken: UserSectionToken){
+        localStorage.setItem(AuthService.AUTH_PARAM, JSON.stringify(userSectionToken));
     }
 }
 

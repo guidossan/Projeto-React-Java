@@ -28,6 +28,7 @@ export default function Login(){
             try{
                 const accessTocken: AccessToken = await auth.autheticate(credentials);
                 console.log(accessTocken);
+                auth.initSession(accessTocken);
                 router.push("/galeria")
             } catch(error: any){
                 const message = error?.message;
