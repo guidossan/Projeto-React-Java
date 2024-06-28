@@ -40,7 +40,6 @@ class AuthService{
     initSession(token: AccessToken){
         if(token.accessToken){
             const decodedToken: any = jwt(token.accessToken);
-            console.log(decodedToken);
             const userSectionToken: UserSectionToken = {
                 accessToken: token.accessToken,
                 email: decodedToken.sub,
@@ -53,6 +52,27 @@ class AuthService{
     }
     setUserSession(userSectionToken: UserSectionToken){
         localStorage.setItem(AuthService.AUTH_PARAM, JSON.stringify(userSectionToken));
+    }
+    getUserSession() : UserSectionToken | null{
+        const authString = localStorage.getItem(AuthService.AUTH_PARAM);
+        if(!authString){
+            return null
+        }
+        const token: UserSectionToken = JSON.parse(authString);
+        return token;
+    }
+    isSessionValide(){
+        const userSession: UserSectionToken|null = this.getUserSession();
+        if(!userSession){
+            return false;
+        }
+        const expiration:number | undefined = userSession.expiration;
+        if(expiration){
+            const expirationDate = expiration * 1000;
+            return new Date() < new Date(expirationDate);
+         
+        }
+        return false;
     }
 }
 

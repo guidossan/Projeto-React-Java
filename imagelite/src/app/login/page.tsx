@@ -27,8 +27,10 @@ export default function Login(){
             const credentials: Credentials = {email: values.email, senha: values.password}
             try{
                 const accessTocken: AccessToken = await auth.autheticate(credentials);
-                console.log(accessTocken);
                 auth.initSession(accessTocken);
+                //returno true ou false para sessao valida
+                auth.isSessionValide();
+                console.log(accessTocken);
                 router.push("/galeria")
             } catch(error: any){
                 const message = error?.message;
