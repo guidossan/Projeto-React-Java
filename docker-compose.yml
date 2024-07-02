@@ -1,0 +1,33 @@
+version: '3.9'
+     
+services:
+
+  db:
+    image: postgresql 16
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234567
+
+  spring-app:
+    image: back-end:latest
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432
+    
+    depends_on:
+      - db
+spa-app:
+  build: 
+    context: ./imagelite
+    dockerfile: Dockerfile
+  ports:
+    - "9090:9090"
+  depends_on:
+    - spring-app
+
