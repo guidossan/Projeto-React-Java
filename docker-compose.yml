@@ -28,7 +28,7 @@ services:
       context: ./imagelite
       dockerfile: Dockerfile
     ports:
-      - "9090:9090"
+      - "9090:3000"
     depends_on:
       - spring-app
 
